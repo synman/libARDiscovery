@@ -43,6 +43,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.os.Handler;
 import android.content.Context;
+import android.os.Build;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -171,7 +172,11 @@ public class ARDiscoveryBLEDiscoveryImpl implements ARDiscoveryBLEDiscovery
             initBLE();
         }
 
-        context.registerReceiver(networkStateIntentReceiver, networkStateChangedFilter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(networkStateIntentReceiver, networkStateChangedFilter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            context.registerReceiver(networkStateIntentReceiver, networkStateChangedFilter);
+        }
 
         opened = true;
     }

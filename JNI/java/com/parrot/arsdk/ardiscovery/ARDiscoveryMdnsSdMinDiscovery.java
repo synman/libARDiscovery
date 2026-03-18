@@ -32,6 +32,7 @@ package com.parrot.arsdk.ardiscovery;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.os.Build;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -136,8 +137,13 @@ public class ARDiscoveryMdnsSdMinDiscovery implements ARDiscoveryWifiDiscovery
                 multicastLock.acquire();
             }
             // this is sticky intent, receiver will be called asap
-            context.registerReceiver(networkStateIntentReceiver, networkStateChangedFilter);
-            context.registerReceiver(wifiStateIntentReceiver, wifiStateChangedFilter);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                context.registerReceiver(networkStateIntentReceiver, networkStateChangedFilter, Context.RECEIVER_NOT_EXPORTED);
+                context.registerReceiver(wifiStateIntentReceiver, wifiStateChangedFilter, Context.RECEIVER_NOT_EXPORTED);
+            } else {
+                context.registerReceiver(networkStateIntentReceiver, networkStateChangedFilter);
+                context.registerReceiver(wifiStateIntentReceiver, wifiStateChangedFilter);
+            }
             started = true;
         }
     }

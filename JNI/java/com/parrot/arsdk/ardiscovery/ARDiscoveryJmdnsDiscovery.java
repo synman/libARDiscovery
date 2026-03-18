@@ -50,6 +50,7 @@ import android.net.NetworkInfo;
 import android.util.Pair;
 import android.os.AsyncTask;
 import android.content.Context;
+import android.os.Build;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.Intent;
@@ -154,7 +155,11 @@ public class ARDiscoveryJmdnsDiscovery implements ARDiscoveryWifiDiscovery
 
         netDeviceServicesHmap = new HashMap<String, ARDiscoveryDeviceService> ();
 
-        context.registerReceiver(networkStateIntentReceiver, networkStateChangedFilter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(networkStateIntentReceiver, networkStateChangedFilter, Context.RECEIVER_NOT_EXPORTED);
+        } else {
+            context.registerReceiver(networkStateIntentReceiver, networkStateChangedFilter);
+        }
 
         opened = true;
     }

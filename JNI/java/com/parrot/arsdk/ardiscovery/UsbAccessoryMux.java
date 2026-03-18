@@ -35,6 +35,7 @@ package com.parrot.arsdk.ardiscovery;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.os.Build;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.usb.UsbAccessory;
@@ -92,7 +93,11 @@ public class UsbAccessoryMux {
 
         IntentFilter filter = new IntentFilter(ACTION_USB_ACCESSORY_ATTACHED);
         filter.addAction(ACTION_USB_PERMISSION);
-        context.registerReceiver(mUsbAccessoryReceiver, filter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.registerReceiver(mUsbAccessoryReceiver, filter, Context.RECEIVER_EXPORTED);
+        } else {
+            context.registerReceiver(mUsbAccessoryReceiver, filter);
+        }
 
         // check for connected accessory
         UsbAccessory[] accessoryList = usbManager.getAccessoryList();
