@@ -87,8 +87,12 @@ public enum ARDISCOVERY_PRODUCT_ENUM {
     ARDISCOVERY_PRODUCT_TINOS (20, "Tinos product"),
    /** Sequoia product */
     ARDISCOVERY_PRODUCT_SEQUOIA (21, "Sequoia product"),
+   /** Anafi product */
+    ARDISCOVERY_PRODUCT_ANAFI (22, "Anafi product"),
+   /** Sky controller 3 product */
+    ARDISCOVERY_PRODUCT_SKYCONTROLLER_3 (23, "Sky controller 3 product"),
    /** Max of products */
-    ARDISCOVERY_PRODUCT_MAX (22, "Max of products");
+    ARDISCOVERY_PRODUCT_MAX (24, "Max of products");
 
     private final int value;
     private final String comment;
